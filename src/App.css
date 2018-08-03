@@ -82,6 +82,9 @@ h5 {
   .capture video {
     max-width: 100%;
   }
+  .date {
+    position: relative;
+  }
   .time {
     float: none;
     margin-top: 0;
