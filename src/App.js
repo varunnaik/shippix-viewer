@@ -50,6 +50,7 @@ class App extends Component {
       for (let c of capturesByDate[date].reverse()) {
         captureList.push(<div className="time captureLeft" key={c.date+c.time}>{c.time}</div>)
         captureList.push(this.getCapture(c.mmsi, c.capture, c.time, info[c.mmsi]))
+        captureList.push(<div className="clear" key={date+'-clear'}></div>);
       }
     })
     return captureList;
