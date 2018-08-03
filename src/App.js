@@ -34,23 +34,24 @@ class App extends Component {
     captures.forEach(capture => {
       const mmsi = capture.substring(0, 9);
       const timestamp = capture.substring(9);
-      const captureDate = moment.unix(timestamp)
+      const captureDate = moment.unix(timestamp);
+      const byDate = captureDate.tz('Australia/Sydney').format('YYYY-MM-DD')
       const date = captureDate.tz('Australia/Sydney').format('ll ')
       const time = captureDate.tz('Australia/Sydney').format('hh:mm:ss a')
-      if (!capturesByDate[timestamp]) {
-        capturesByDate[timestamp] = []
+      if (!capturesByDate[byDate]) {
+        capturesByDate[byDate] = []
       }
-      capturesByDate[timestamp].push({
+      capturesByDate[byDate].push({
         date, time, mmsi, capture
       });
     });
     const captureList = [];
-    Object.keys(capturesByDate).sort().reverse().map(timestamp => {
-      captureList.push(<div className="date captureLeft" key={timestamp}>{capturesByDate[timestamp][0].date}</div>)
-      for (let c of capturesByDate[timestamp].reverse()) {
+    Object.keys(capturesByDate).sort().reverse().map(byDate => {
+      captureList.push(<div className="date captureLeft" key={byDate}>{capturesByDate[byDate][0].date}</div>)
+      for (let c of capturesByDate[byDate].reverse()) {
         captureList.push(<div className="time captureLeft" key={c.date+c.time}>{c.time}</div>)
         captureList.push(this.getCapture(c.mmsi, c.capture, c.time, info[c.mmsi]))
-        captureList.push(<div className="clear" key={timestamp+'-clear'}></div>);
+        captureList.push(<div className="clear" key={byDate+'-clear'}></div>);
       }
     })
     return captureList;
