@@ -11,9 +11,7 @@ class App extends Component {
 
     window.onscroll = () => {
       if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {
-        console.log("C1")
         if (this.state.displayedCaptureCount <= this.state.totalCaptureCount) {
-          console.log("C2")
           this.setState({ displayedCaptureCount: this.state.displayedCaptureCount + PAGE_SIZE });
         }
       }
