@@ -36,10 +36,9 @@ class App extends Component {
             capturesByDate[byDate] = []
           }
           capturesByDate[byDate].push({
-            date, time, mmsi, capture
+            date, time, mmsi, capture, captureDate
           });
         });
-
         this.setState({
           captures: captures,
           capturesByDate: capturesByDate,
@@ -65,7 +64,7 @@ class App extends Component {
     const captureList = [];
     Object.keys(capturesByDate).sort().reverse().slice(0, count).map(byDate => {
       captureList.push(<div className="date captureLeft" key={byDate}>{capturesByDate[byDate][0].date}</div>)
-      for (let c of capturesByDate[byDate].reverse()) {
+      for (let c of capturesByDate[byDate].sort((a,b)=> b.captureDate - a.captureDate)) {
         captureList.push(<div className="time captureLeft" key={c.date + c.time}>{c.time}</div>)
         captureList.push(this.getCapture(c.mmsi, c.capture, c.time, info[c.mmsi]))
         captureList.push(<div className="clear" key={c.date + c.time + '-clear'}></div>);
