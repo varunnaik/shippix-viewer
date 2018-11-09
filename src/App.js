@@ -30,7 +30,7 @@ class App extends Component {
           const timestamp = capture.substring(9);
           const captureDate = moment.unix(timestamp);
           const byDate = captureDate.tz('Australia/Sydney').format('YYYY-MM-DD')
-          const date = captureDate.tz('Australia/Sydney').format('ll ')
+          const date = captureDate.tz('Australia/Sydney').format('ll')
           const time = captureDate.tz('Australia/Sydney').format('hh:mm:ss a')
           if (!capturesByDate[byDate]) {
             capturesByDate[byDate] = []
@@ -49,24 +49,24 @@ class App extends Component {
       .catch(e => { console.error(e) });
   }
 
-  getCapture(mmsi, code, time, info) {
+  getCapture(mmsi, code, date, time, info) {
     return <div key={code} className="capture">
+    <div className="datetime captureLeft" key={date + time}><span className="date">{date}</span> {time}</div>
       <video width="600" height="270" controls>
         <source src={"https://s3-ap-southeast-2.amazonaws.com/shippix/" + code + ".mp4"} type="video/webm" />
       </video>
       <h5>{info ? info.name : ""}</h5>
-      <div><strong>{info ? info.description : ""}</strong></div>
-      <div><em>MMSI: {mmsi} {info ? "(size: " + info.size + ")" : ""}</em></div>
+      <div><span>{info ? info.description : ""}</span></div>
+      <div><span>mmsi: {mmsi}{info ? ", size: " + info.size + "" : ""}</span></div>
     </div>
   }
 
   getCaptureList(capturesByDate, count, info) {
     const captureList = [];
     Object.keys(capturesByDate).sort().reverse().slice(0, count).map(byDate => {
-      captureList.push(<div className="date captureLeft" key={byDate}>{capturesByDate[byDate][0].date}</div>)
+      captureList.push(<div className="dateHeader captureLeft" key={byDate}>{capturesByDate[byDate][0].date}</div>)
       for (let c of capturesByDate[byDate].sort((a,b)=> b.captureDate - a.captureDate)) {
-        captureList.push(<div className="time captureLeft" key={c.date + c.time}>{c.time}</div>)
-        captureList.push(this.getCapture(c.mmsi, c.capture, c.time, info[c.mmsi]))
+        captureList.push(this.getCapture(c.mmsi, c.capture, c.date, c.time, info[c.mmsi]))
         captureList.push(<div className="clear" key={c.date + c.time + '-clear'}></div>);
       }
     })

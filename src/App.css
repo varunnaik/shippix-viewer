@@ -32,12 +32,13 @@
 
 
 .capture {
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #ccc;
   margin-bottom: 10px;
   width: 80%;
-    right: 0;
-    float: right;
+  right: 0;
+  float: right;
+  background: white;
 }
 
 h5 {
@@ -46,15 +47,20 @@ h5 {
   margin: 2px;
 }
 
-.date {
-  width: 100%;  
+.dateHeader {
+  width: 80% !important;  
   font-weight: bold;
   font-size: 22px;
+  text-align: left !important;
+  margin-left: 20% !important;
 }
 
-.time {
+.datetime {
   float: left;
   margin-top: 250px;
+}
+.datetime .date {
+  display: none;
 }
 .captureLeft {
   width: 20%;
@@ -65,8 +71,17 @@ h5 {
 .clear {
   clear: both;
 }
+.capture h5, .capture span {
+  margin-left: 20%; /* Same as captureLeft's width */
+}
 
 @media only screen and (max-width: 768px){
+  .App {
+    background: #eee;
+  }
+  video {
+    height: auto;
+  }
   .captureLeft { 
     width: 100%;
     padding-right: 0;
@@ -74,17 +89,27 @@ h5 {
     padding: 5px;
     text-align: left;
   }
+  .capture h5, .capture span {
+    padding-left: 5px;
+    margin-left: 0;
+  }
   .capture {
     float: none;
     width: 100%;
+    border-top: 1px solid #ddd;
   }
   .capture video {
     max-width: 100%;
   }
-  .date {
+  .dateHeader {
     position: relative;
+    width: 100% !important;  
+    margin-left: 0% !important;
   }
-  .time {
+  .datetime .date {
+    display: inline;
+  }
+  .datetime {
     float: none;
     margin-top: 0;
   }
